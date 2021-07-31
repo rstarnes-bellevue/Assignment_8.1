@@ -41,7 +41,7 @@ def GetWeather (location):
                     print(response_dict.keys())
                     FormatResponse(response_dict)
         except:
-            print("Connection unsuccessful, location invalid or network unavailable.")
+            print("Connection unsuccessful, location invalid or network unavailable. Please try again.")
             location = input("City/Zip code: ")
 
 def FormatResponse (response_dict):
@@ -55,10 +55,12 @@ def FormatResponse (response_dict):
         weather = key['weather']
 
         print(f"""
-    Date:           {key['dt_txt']}
-    Temperature:    {key['main']['temp']} degrees
-    Weather:        {weather[0]['description'].capitalize()}
-    """)
+******************************************
+*   Date:           {key['dt_txt']}  *
+******************************************
+    Temperature:    {key['main']['temp']} degrees      
+    Weather:        {weather[0]['description'].capitalize()}          
+""")
     #JSONFormat(forecast)
     #print(f"Keys: {len(forecast)}")
     #for key in forecast:
