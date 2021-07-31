@@ -1,5 +1,6 @@
 import requests
 import json
+import time
 
 #Validates location and returns a response (if successful) or error (if unsuccessful)
 def GetWeather (location):
@@ -7,10 +8,11 @@ def GetWeather (location):
 
     #Repeats while an invalid location is detected
     while connection == False:
+        #Checks to make sure connection is valid
         try:
             #Checks for zip code location
             if location.isdigit():
-                response = requests.get("http://api.openweathermap.org/data/2.5/forecast?zip={},US&units=imperial&appid=d56a5ad93c4f731841282b93a76c5a54".format(location))
+                response = requests.get(f"http://api.openweathermap.org/data/2.5/forecast?zip={location},US&units=imperial&appid=d56a5ad93c4f731841282b93a76c5a54")
 
                 #Produces error if location isn't found
                 if response.status_code == 400 or response.status_code == 404:
@@ -21,12 +23,15 @@ def GetWeather (location):
                 else:
                     connection = True
                     #JSONFormat(response.json())
+                    print("Connection successful. Displaying the 5 day/4 hour forecast.")
+                    time.sleep(2)
+
                     response_dict = response.json()
-                    print(response_dict.keys())
-                    FormatResponse(response_dict)
+                    #print(response_dict.keys())
+                    OutputResponse(response_dict)
             #Checks for city location
             else:
-                response = requests.get("http://api.openweathermap.org/data/2.5/forecast?q={}&units=imperial&appid=d56a5ad93c4f731841282b93a76c5a54".format(location))
+                response = requests.get(f"http://api.openweathermap.org/data/2.5/forecast?q={location}&units=imperial&appid=d56a5ad93c4f731841282b93a76c5a54")
 
                 #Produces error if location isn't found
                 if response.status_code == 400 or response.status_code == 404:
@@ -37,17 +42,21 @@ def GetWeather (location):
                 else:
                     connection = True
                     #JSONFormat(response.json())
+                    print("Connection successful. Displaying the 5 day/4 hour forecast.")
+                    time.sleep(2)
+
                     response_dict = response.json()
-                    print(response_dict.keys())
-                    FormatResponse(response_dict)
+                    #print(response_dict.keys())
+                    OutputResponse(response_dict)
+        #Produces an error if connection cannot be established
         except:
             print("Connection unsuccessful, location invalid or network unavailable. Please try again.")
             location = input("City/Zip code: ")
 
-def FormatResponse (response_dict):
+def OutputResponse (response_dict):
     forecast = response_dict['list']
-    print(f"Lists: {len(forecast)}")
 
+    #print(f"Lists: {len(forecast)}")
     #forecast = forecast[0]
 
     for key in forecast:
@@ -61,12 +70,10 @@ def FormatResponse (response_dict):
     Temperature:    {key['main']['temp']} degrees      
     Weather:        {weather[0]['description'].capitalize()}          
 """)
-    #JSONFormat(forecast)
-    #print(f"Keys: {len(forecast)}")
-    #for key in forecast:
-    #    print(key)
+        time.sleep(0.5)
 
-
+#Takes API data and makes it more readable
+#Mainly for testing/verification
 def JSONFormat (forecast):
     text = json.dumps(forecast, sort_keys=True, indent=4)
     print(text)
