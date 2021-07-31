@@ -70,7 +70,35 @@ def OutputResponse (response_dict):
     Temperature:    {key['main']['temp']} degrees      
     Weather:        {weather[0]['description'].capitalize()}          
 """)
-        time.sleep(0.5)
+        #"Pictures" of weather conditions
+        if weather[0]['main'] == 'Clouds':
+            print("""
+                 _
+               (   )  ___
+             _(     )(   )
+           (     (        )
+            (___(__________)
+            """)
+        elif weather[0]['main'] == 'Clear':
+            print(f"""
+                \ ___ /
+             __  /   \  __
+                 \___/
+                /     \\
+                  
+            """)
+        elif weather[0]['main'] == 'Rain':
+            print("""
+                _______
+              _(       )
+            (     (     )
+             (___(________)
+             /   /   /   /
+              /   /   / 
+            """)
+        #time.sleep(0.5)
+
+    #JSONFormat(forecast)
 
 #Takes API data and makes it more readable
 #Mainly for testing/verification
