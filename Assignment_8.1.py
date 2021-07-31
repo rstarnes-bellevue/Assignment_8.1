@@ -3,7 +3,7 @@ import json
 import time
 
 #Validates location and returns a response (if successful) or error (if unsuccessful)
-def GetWeather (location):
+def GetWeather (location, key):
     connection = False
 
     #Repeats while an invalid location is detected
@@ -12,7 +12,7 @@ def GetWeather (location):
         try:
             #Checks for zip code location
             if location.isdigit():
-                response = requests.get(f"http://api.openweathermap.org/data/2.5/forecast?zip={location},US&units=imperial&appid=d56a5ad93c4f731841282b93a76c5a54")
+                response = requests.get(f"http://api.openweathermap.org/data/2.5/forecast?zip={location},US&units=imperial&appid={key}")
 
                 #Produces error if location isn't found
                 if response.status_code == 400 or response.status_code == 404:
@@ -31,7 +31,7 @@ def GetWeather (location):
                     OutputResponse(response_dict)
             #Checks for city location
             else:
-                response = requests.get(f"http://api.openweathermap.org/data/2.5/forecast?q={location}&units=imperial&appid=d56a5ad93c4f731841282b93a76c5a54")
+                response = requests.get(f"http://api.openweathermap.org/data/2.5/forecast?q={location}&units=imperial&appid={key}")
 
                 #Produces error if location isn't found
                 if response.status_code == 400 or response.status_code == 404:
@@ -84,5 +84,6 @@ print("Welcome to PyWeather! Please enter either a city or zip code for the curr
 
 #Asks for location and passes it into GetWeather function
 location = input("City/Zip code: ")
-GetWeather(location)
+key = "d56a5ad93c4f731841282b93a76c5a54"
+GetWeather(location, key)
 
