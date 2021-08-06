@@ -1,6 +1,7 @@
 import requests
 import json
 import time
+import os
 
 #Validates location and returns a response (if successful) or error (if unsuccessful)
 def GetWeather (location, key):
@@ -112,6 +113,11 @@ print("Welcome to PyWeather! Please enter either a city or zip code for the curr
 
 #Asks for location and passes it into GetWeather function
 location = input("City/Zip code: ")
-key = "d56a5ad93c4f731841282b93a76c5a54"
+
+#Verify current directory
+#print(os.listdir())
+with open('Weather Project\key.txt') as file_object:
+    key = file_object.read()
+#Calls GetWeather function and passes location from user input and API key from file
 GetWeather(location, key)
 
