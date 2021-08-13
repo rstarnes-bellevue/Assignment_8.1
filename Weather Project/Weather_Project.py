@@ -54,6 +54,7 @@ def GetWeather (location, key):
             print("Connection unsuccessful, location invalid or network unavailable. Please try again.")
             location = input("City/Zip code: ")
 
+#Functio that displays the output based on location given
 def OutputResponse (response_dict):
     forecast = response_dict['list']
 
@@ -101,6 +102,21 @@ def OutputResponse (response_dict):
 
     #JSONFormat(forecast)
 
+    userInput = ""
+    while userInput == "":
+        print("\nPress [R] to enter a new location or press [Q] to quit.", end=" ")
+        userInput = input()
+
+        if userInput == "r" or userInput == "R":
+            main()
+        elif userInput == "q" or userInput == "Q":
+            print("\nThank you for using PyWeather!\n")
+            break
+        else:
+            print("Input not valid, please try again.")
+            userInput = ""
+    
+
 #Takes API data and makes it more readable
 #Mainly for testing/verification
 def JSONFormat (forecast):
@@ -108,16 +124,21 @@ def JSONFormat (forecast):
     print(text)
 
 
-#Program start
-print("Welcome to PyWeather! Please enter either a city or zip code for the current forecast.\n")
+#Program start/main function
+def main():
+    print("Welcome to PyWeather! Please enter either a city or zip code for the current forecast.\n")
 
-#Asks for location and passes it into GetWeather function
-location = input("City/Zip code: ")
+    #Asks for location and passes it into GetWeather function
+    location = input("City/Zip code: ")
 
-#Verify current directory
-#print(os.listdir())
-with open('Weather Project\key.txt') as file_object:
-    key = file_object.read()
-#Calls GetWeather function and passes location from user input and API key from file
-GetWeather(location, key)
+    #Verify current directory
+    #print(os.listdir())
+    with open('Weather Project\key.txt') as file_object:
+        key = file_object.read()
+    #Calls GetWeather function and passes location from user input and API key from file
+    GetWeather(location, key)
+
+#Calls main function
+if __name__ == "__main__":
+    main()
 
