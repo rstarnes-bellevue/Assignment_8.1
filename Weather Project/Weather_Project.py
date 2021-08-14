@@ -54,7 +54,7 @@ def GetWeather (location, key):
             print("Connection unsuccessful, location invalid or network unavailable. Please try again.")
             location = input("City/Zip code: ")
 
-#Functio that displays the output based on location given
+#Function that displays the output based on location given
 def OutputResponse (response_dict):
     forecast = response_dict['list']
 
@@ -65,7 +65,7 @@ def OutputResponse (response_dict):
 
         weather = key['weather']
 
-        print(f"""
+        weather_output = (f"""
 ******************************************
 *   Date:           {key['dt_txt']}  *
 ******************************************
@@ -74,23 +74,25 @@ def OutputResponse (response_dict):
 """)
         #"Pictures" of weather conditions
         if weather[0]['main'] == 'Clouds':
-            print("""
+            weather_picture = ("""
                  _
                (   )  ___
              _(     )(   )
            (     (        )
             (___(__________)
+
             """)
         elif weather[0]['main'] == 'Clear':
-            print(f"""
+            weather_picture = ("""
                 \ ___ /
              __  /   \  __
                  \___/
                 /     \\
                   
+
             """)
         elif weather[0]['main'] == 'Rain':
-            print("""
+            weather_picture = ("""
                 _______
               _(       )
             (     (     )
@@ -98,6 +100,11 @@ def OutputResponse (response_dict):
              /   /   /   /
               /   /   / 
             """)
+
+        weather_total = (weather_output + "\n" + weather_picture)
+        
+        print(weather_total, end=" ")
+
         time.sleep(0.5)
 
     #JSONFormat(forecast)
